@@ -169,6 +169,7 @@ void TCLClimate::build_set_cmd(get_cmd_resp_t *get_cmd_resp) {
 
 void TCLClimate::setup() {
   set_update_interval(UPDATE_INTERVAL_MS);
+  this->set_supported_custom_fan_modes({"Turbo", "Mute", "Automatic", "1", "2", "3", "4", "5"});
 }
 
 // Swing control methods from old code
@@ -328,7 +329,6 @@ climate::ClimateTraits TCLClimate::traits() {
     climate::CLIMATE_MODE_DRY,
     climate::CLIMATE_MODE_AUTO
   });
-  traits.set_supported_custom_fan_modes({"Turbo", "Mute", "Automatic", "1", "2", "3", "4", "5"});
   traits.set_supported_swing_modes({
     climate::CLIMATE_SWING_OFF,
     climate::CLIMATE_SWING_BOTH,
