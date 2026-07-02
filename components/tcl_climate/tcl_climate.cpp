@@ -100,7 +100,7 @@ void TCLClimate::build_set_cmd(get_cmd_resp_t *get_cmd_resp) {
     m_set_cmd.data.off_timer_en = 0;
     m_set_cmd.data.on_timer_en = 0;
     m_set_cmd.data.beep = 1;
-    m_set_cmd.data.disp = 1;
+    m_set_cmd.data.disp = get_cmd_resp->data.disp;
     m_set_cmd.data.eco = 0;
     m_set_cmd.data.turbo = get_cmd_resp->data.turbo;
     m_set_cmd.data.mute = get_cmd_resp->data.mute;
@@ -165,6 +165,22 @@ void TCLClimate::build_set_cmd(get_cmd_resp_t *get_cmd_resp) {
         xor_byte ^= m_set_cmd.raw[i];
     }
     m_set_cmd.raw[sizeof(m_set_cmd.raw) - 1] = xor_byte;
+}
+
+void TCLClimate::set_display(bool state) {
+  display_state = state;
+
+  get_cmd_resp_t get_cmd_resp = {0};
+  memcpy(get_cmd_resp.raw, m_get_cmd_resp.raw, sizeof(get_cmd_resp.raw));
+
+  get_cmd_resp.data.disp = state ? 1 : 0;
+
+  build_set_cmd(&get_cmd_resp);
+  ready_to_send_set_cmd_flag = true;
+}
+
+bool TCLClimate::get_display() const {
+  return m_get_cmd_resp.data.disp;
 }
 
 void TCLClimate::setup() {
