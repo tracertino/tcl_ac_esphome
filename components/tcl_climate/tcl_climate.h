@@ -208,6 +208,11 @@ class TCLClimate : public climate::Climate, public uart::UARTDevice, public Poll
   void control_vertical_swing(const std::string &swing_mode);
   void control_horizontal_swing(const std::string &swing_mode);
 
+  bool display_state = true;
+
+  void set_display(bool state);
+  bool get_display() const;
+
   void build_set_cmd(get_cmd_resp_t *get_cmd_resp);
 
   void setup() override;
