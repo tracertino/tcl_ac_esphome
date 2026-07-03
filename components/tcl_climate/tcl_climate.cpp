@@ -512,10 +512,6 @@ void TCLClimate::loop() {
                 if (this->is_changed) {
                     this->publish_state();
                 }
-
-                if (id(ac_display_switch)) {
-                    id(ac_display_switch).publish_state(this->get_display());
-                }
             }
         }
     }
